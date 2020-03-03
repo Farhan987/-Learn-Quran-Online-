@@ -1,121 +1,139 @@
 import React, { Component } from "react";
-import { View } from "react-native";
+import { View, TouchableOpacity } from "react-native";
 import { Text, Icon, Button } from "native-base";
 import { DARK_BROWN, LIGHT_BROWN } from "../../themes/color";
+
 export default class MistakesHistoryComponent extends Component {
   render() {
+    const dateTime = String(this.props.date).split("T");
+
     return (
       <React.Fragment>
         <View style={{ height: 15 }} />
+
         <View
           style={{
-            height: 90,
-            justifyContent: "center"
+            height: 80,
+            width: "90%",
+            alignSelf: "center",
+            borderRadius: 10,
+            borderWidth: 1,
+            borderColor: DARK_BROWN,
+            backgroundColor: "white"
           }}
         >
           <View
             style={{
-              height: 80,
-              width: "90%",
-              alignSelf: "center",
-              borderRadius: 10,
-              borderWidth: 1,
-              borderColor: DARK_BROWN,
-              backgroundColor: "white"
+              flexDirection: "row",
+              flex: 2
             }}
           >
             <View
               style={{
-                flexDirection: "row",
-                flex: 2
+                flex: 1,
+                justifyContent: "center",
+                alignItems: "flex-start"
               }}
             >
               <View
                 style={{
-                  flex: 1,
-                  justifyContent: "center",
-                  alignItems: "flex-start"
+                  height: 15,
+                  width: 15,
+                  borderRadius: 30,
+                  backgroundColor: LIGHT_BROWN,
+                  marginLeft: 10
                 }}
-              >
-                <View
-                  style={{
-                    height: 15,
-                    width: 15,
-                    borderRadius: 30,
-                    backgroundColor: LIGHT_BROWN,
-                    marginLeft: 10
-                  }}
-                />
-              </View>
-              <View
+              />
+            </View>
+
+            {this.props.notPress ? (
+              <Text style={{ color: LIGHT_BROWN }}>{this.props.mistakes}</Text>
+            ) : (
+              <TouchableOpacity
+                onPress={
+                  this.props.onTab ? () => this.props.onTab() : () => false
+                }
                 style={{
                   flex: 4,
                   justifyContent: "center",
                   alignItems: "flex-start"
                 }}
               >
-                <Text style={{ color: LIGHT_BROWN }}>Mistakes 1</Text>
-              </View>
-              <View
-                style={{
-                  flex: 2,
-                  justifyContent: "center",
-                  alignItems: "center"
-                }}
-              >
-                <Text style={{ fontSize: 10 }}>10/11/2019</Text>
-              </View>
-            </View>
+                <Text style={{ color: LIGHT_BROWN }}>
+                  {this.props.mistakes}
+                </Text>
+              </TouchableOpacity>
+            )}
 
             <View
               style={{
                 flex: 2,
-                marginLeft: "14%",
-                flexDirection: "row"
+                justifyContent: "center",
+                alignItems: "center",
+                paddingRight: 6
               }}
             >
+              <Text style={{ fontSize: 13 }}>{dateTime[0]}</Text>
+            </View>
+          </View>
+
+          <View
+            style={{
+              flex: 2,
+              marginLeft: "14%",
+              flexDirection: "row"
+            }}
+          >
+            <View
+              style={{
+                flex: 3,
+                justifyContent: "flex-start",
+                alignItems: "flex-start"
+              }}
+            >
+              <Text
+                style={{ fontSize: 15 }}
+                numberOfLines={2}
+                ellipsizeMode={"tail"}
+              >
+                {this.props.misExplanation}
+              </Text>
+            </View>
+            {this.props.ShowTick ? (
               <View
                 style={{
-                  flex: 3,
+                  flex: 1,
                   justifyContent: "center",
-                  alignItems: "flex-start"
+                  alignItems: "center"
                 }}
               >
-                <Text style={{ fontSize: 10 }}>
-                  This mistsake is in surah fateha...Proper pronunciation is
-                  required
-                </Text>
-              </View>
-              {this.props.ShowTick ? (
-                <View
+                <TouchableOpacity
+                  success
+                  onPress={this.props.onPress}
                   style={{
-                    flex: 1,
+                    height: 25,
+                    backgroundColor: "#54B929",
+                    width: 50,
                     justifyContent: "center",
-                    alignItems: "center"
+                    alignItems: "center",
+                    borderRadius: 4
                   }}
                 >
-                  <Button
-                    bordered
-                    success
+                  <Icon
+                    name="check"
+                    type="FontAwesome"
                     style={{
-                      height: 30,
-                      width: 60,
-                      justifyContent: "center",
-                      alignItems: "center",
-                      borderRadius: 10
+                      color: "white",
+                      fontSize: 16,
+
+                      alignSelf: "center"
                     }}
-                  >
-                    <Icon
-                      name="check"
-                      type="FontAwesome"
-                      style={{ color: "#54B929" }}
-                    />
-                  </Button>
-                </View>
-              ) : (
-                false
-              )}
-            </View>
+                  />
+                </TouchableOpacity>
+              </View>
+            ) : (
+              false
+            )}
           </View>
         </View>
       </React.Fragment>
